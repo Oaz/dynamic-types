@@ -1,0 +1,13 @@
+# Use an official Lua runtime as a parent image
+FROM ubuntu:24.04
+
+# Install Lua and other necessary dependencies
+RUN apt-get update && apt-get install -y \
+    lua5.3 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Run the specified Lua script when the container launches
+CMD ["sh", "-c", "lua5.3 /app/$SCRIPT_NAME"]

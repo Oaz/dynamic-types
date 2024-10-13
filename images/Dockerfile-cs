@@ -1,0 +1,11 @@
+# Use an official .NET SDK image to compile the C# script
+FROM mcr.microsoft.com/dotnet/sdk:8.0
+
+# Set the working directory in the container
+WORKDIR /local
+
+# Create the C# app
+RUN dotnet new console -o TheApp
+
+# Copy the script and compile the project
+CMD ["sh", "-c", "cp /app/$SCRIPT_NAME /local/TheApp/Program.cs && cd /local/TheApp && dotnet run"]

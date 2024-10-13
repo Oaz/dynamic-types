@@ -1,0 +1,11 @@
+# Use an official Node.js runtime as a parent image
+FROM node:latest
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Install TypeScript and other dependencies
+RUN npm install -g typescript
+
+# Compile and run the TypeScript file, then remove the compiled .js file
+CMD ["sh", "-c", "tsc /app/$SCRIPT_NAME --target ES2020 --module commonjs --strict --esModuleInterop --skipLibCheck --forceConsistentCasingInFileNames --outDir /tmp && node /tmp/${SCRIPT_NAME%.ts}.js"]

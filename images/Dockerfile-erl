@@ -1,0 +1,11 @@
+# Use an official Erlang runtime as a parent image
+FROM erlang:27-slim
+
+# Build the PLT
+RUN dialyzer --build_plt --apps erts kernel stdlib crypto compiler parsetools
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Run the Erlang script
+CMD ["sh", "-c", "erlc +debug_info -o /tmp $SCRIPT_NAME && dialyzer /tmp/${SCRIPT_NAME%%.*}.beam; escript /app/$SCRIPT_NAME"]
