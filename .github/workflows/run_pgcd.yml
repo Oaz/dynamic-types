@@ -1,0 +1,23 @@
+name: Run PGCD
+
+on:
+  push:
+    branches:
+      - trunk
+  pull_request:
+    branches:
+      - trunk
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build docker images
+        run: ./images/build.sh
+
+      - name: Run PGCD scripts
+        run: ./pgcd/run.sh
